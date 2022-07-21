@@ -1,27 +1,85 @@
-import React from "react";
+import { useState } from 'react';
+import './App.css';
 
-function Waterfall() {
+function App() {
+
+
+  const [inputFields, setInputFields] = useState([{ min: "", max: "" , percent:""}]);
+
+  const handleFormChange = (index, event) => {
+    let data = [...inputFields];
+    data[index][event.target.name] = event.target.value;
+    setInputFields(data);
+  };
+
+  const addFields = () => {
+    let newfield = { min: "", max: "", percent:"" };
+    setInputFields([...inputFields, newfield]);
+  };
+
+  const removeFields = (index) => {
+    let data = [...inputFields];
+    data.splice(index, 1);
+    setInputFields(data);
+  }
+
+  const submit = (event) => {
+    event.preventDefault();
+
+    // Validation
+    var validEntry = true;
+
+    if (validEntry == true) {
+        const element = document.createElement("a");
+        const file = new Blob([JSON.stringify(inputFields)], {
+          type: "application/json",
+        });
+        element.href = URL.createObjectURL(file);
+        element.download = "Waterfall_Input.json";
+        document.body.appendChild(element);
+        element.click();
+      }
+
+  }
+
   return (
-    <div className="waterfall">
-      <div class="container">
-        <div class="row align-items-center my-5">
-          <div class="col-lg-7">
-            <img
-              class="img-fluid rounded mb-4 mb-lg-0"
-              src="http://placehold.it/900x400"
-              alt=""
-            />
-          </div>
-          <div class="col-lg-5">
-            <h1 class="font-weight-light">Waterfall</h1>
-            <p>
-              Waterfall Form here
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className="App">
+      <form  onSubmit={submit}>
+        {inputFields.map((input, index) => {
+          return (
+            <div key={index}>
+              <input className = "Waterfall-text-input"
+                type="number"
+                name='min'
+                placeholder='Low Temp'
+                value={input.name}
+                onChange={event => handleFormChange(index, event)}
+              />
+              <input className = "Waterfall-text-input"
+                type="number"
+                name='max'
+                placeholder='High Temp'
+                value={input.age}
+                onChange={event => handleFormChange(index, event)}
+              />
+              <input className = "Waterfall-text-input"
+                type="number"
+                name='percent'
+                placeholder='Fan Level (%)'
+                value={input.age}
+                onChange={event => handleFormChange(index, event)}
+              />
+
+               <button className="Waterfall-remove-button" onClick={() => removeFields(index)}>-</button>
+            </div>
+          )
+        })}
+      </form>
+      <button className="Waterfall-add-button"onClick={addFields}>+</button>
+      <br/>
+      <button className = "App-button" onClick={submit}>Submit</button>
     </div>
   );
 }
 
-export default Waterfall;
+export default App;

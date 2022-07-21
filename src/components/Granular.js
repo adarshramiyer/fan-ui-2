@@ -1,27 +1,45 @@
 import React from "react";
+import { useState } from "react";
+import "./App.css";
+import globalLowTemp from "./globalLowTemp";
+import globalHighTemp from "./globalHighTemp";
 
 function Granular() {
-  return (
-    <div className="granular">
-      <div class="container">
-        <div class="row align-items-center my-5">
-          <div class="col-lg-7">
-            <img
-              class="img-fluid rounded mb-4 mb-lg-0"
-              src="http://placehold.it/900x400"
-              alt=""
-            />
-          </div>
-          <div class="col-lg-5">
-            <h1 class="font-weight-light">Granular</h1>
-            <p>
-              Granular form here
-            </p>
-          </div>
-        </div>
+  var lowTemp = globalLowTemp.value;
+  var highTemp = globalHighTemp.value;
+  var numInputs = highTemp - lowTemp;
+
+  let arr = [];
+  for (let i = 0; i < 100; i++) {
+    arr.push(i);
+  }
+  let initialState = {};
+
+  arr.forEach((element) => {
+    initialState[element] = "";
+  });
+  console.log(initialState);
+  const [input, setInput] = useState(initialState);
+  let inputName = 0;
+
+  const handleUserInputChange = (e) => {
+    const name = e.target.name;
+    const newValue = e.target.value;
+    setInput({ [name]: newValue });
+  };
+
+  const a = arr.map((number) => {
+    inputName++;
+    return (
+      <div key={number}>
+        <input
+          value={input[inputName]}
+          name={inputName}
+          onChange={handleUserInputChange}
+        ></input>
       </div>
-    </div>
-  );
+    );
+  });
 }
 
 export default Granular;

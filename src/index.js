@@ -4,7 +4,6 @@ import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
   Navigation,
-  Footer,
   Home,
   Waterfall,
   Granular,
@@ -18,7 +17,6 @@ ReactDOM.render(
       <Route path="/waterfall" element={<Waterfall />} />
       <Route path="/granular" element={<Granular />} />
     </Routes>
-    <Footer />
   </Router>,
 
   document.getElementById("root")
