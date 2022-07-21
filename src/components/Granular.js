@@ -75,7 +75,7 @@ function Granular() {
     <background className="App-background">
       <form onSubmit={handleSubmit}>
         <label style={blueLabelStyle}>
-          Enter Temperature at which to run following fan levels:
+          Enter Max Temperature for following fan levels:
         </label>
         <table border="0">
           <tr>
